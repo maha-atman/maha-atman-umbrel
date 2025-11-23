@@ -13,8 +13,6 @@ services:
       DATABASE_PATH: /app/data/subtrackr.db
     volumes:
       - ${APP_DATA_DIR}/data:/app/data
-      - ${APP_DATA_DIR}/web:/app/web
-      - ${APP_DATA_DIR}/templates:/app/templates
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
       interval: 30s
