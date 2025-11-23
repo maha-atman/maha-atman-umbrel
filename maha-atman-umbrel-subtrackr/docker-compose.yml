@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: maha-atman-umbrel-subtrackr_app_1
+      APP_PORT: "8080"
+
+  app:
+    image: ghcr.io/bscott/subtrackr:latest
+    restart: unless-stopped
+    environment:
+      GIN_MODE: "release"
+      DATABASE_PATH: /app/data/subtrackr.db
+      PORT: "8080"
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+      - ${APP_DATA_DIR}/web:/app/web
+      - ${APP_DATA_DIR}/templates:/app/templates
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - subtrackr_network
+
+networks:
+  subtrackr_network:
+    driver: bridge
