@@ -1,11 +1,10 @@
 version: "3.8"
-
 services:
   app_proxy:
     environment:
       APP_HOST: maha-atman-umbrel-subtrackr_app_1
       APP_PORT: "8080"
-
+  
   app:
     image: ghcr.io/bscott/subtrackr:latest
     restart: unless-stopped
@@ -23,9 +22,3 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-    networks:
-      - subtrackr_network
-
-networks:
-  subtrackr_network:
-    driver: bridge

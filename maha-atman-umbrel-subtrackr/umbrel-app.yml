@@ -11,8 +11,8 @@ releaseNotes: >-
 developer: bscott
 website: https://github.com/bscott/subtrackr
 dependencies: []
-repo: https://github.com/maha-atman/maha-atman-umbrel-subtrackr
-support: https://github.com/maha-atman/maha-atman-umbrel-subtrackr/issues
+repo: https://github.com/maha-atman/maha-atman-umbrel
+support: https://github.com/maha-atman/maha-atman-umbrel/issues
 port: 10077
 gallery:
   - 1.jpg
@@ -21,4 +21,4 @@ defaultUsername: ""
 defaultPassword: ""
 icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/subtrackr.png
 submitter: maha-atman
-submission: https://github.com/maha-atman/maha-atman-umbrel-subtrackr
+submission: https://github.com/maha-atman/maha-atman-umbrel
