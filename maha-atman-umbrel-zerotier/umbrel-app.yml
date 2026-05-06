@@ -1,0 +1,26 @@
+manifestVersion: 1
+id: maha-atman-umbrel-zerotier
+category: Tools
+name: ZeroTier
+version: "1.14.2"
+tagline: ZeroTier Network Management
+description: >-
+  ZeroTier is a smart Ethernet switch for planet Earth.
+releaseNotes: >-
+  Initial Umbrel release for ZeroTier.
+developer: maha-atman
+website: https://www.zerotier.com/
+dependencies: []
+repo: https://github.com/maha-atman/maha-atman-umbrel-zerotier
+support: https://github.com/maha-atman/maha-atman-umbrel-zerotier/issues
+port: 9993
+gallery:
+  - 1.jpg
+  - 2.jpg
+  - 3.jpg
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/zerotier.png
+submitter: maha-atman
+submission: https://github.com/maha-atman/maha-atman-umbrel-zerotier

@@ -1,1 +1,15 @@
 /.specstory
+/.vscode
+/node_modules
+/.git
+.env
+docker-compose.override.yml
+*.log
+/data
+*.tmp
+*.bak
+*.swp
+dist/
+build/
+Thumbs.db
+.DS_Store

@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  zerotier:
+    image: zerotier/zerotier:1.14.2
+    command: ${NETWORK_ID}
+    volumes:
+      - /data/zerotier:/var/lib/zerotier-one
+    network_mode: host
+    healthcheck:
+      test: "true"
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    devices:
+      - /dev/net/tun
+    networks: {}
+    ports: []
