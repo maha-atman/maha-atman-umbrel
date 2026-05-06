@@ -1,17 +1,24 @@
 version: "3.8"
+
 services:
+  app_proxy:
+    environment:
+      APP_HOST: maha-atman-umbrel-zerotier_zerotier_1
+      APP_PORT: "9993"
+
   zerotier:
     image: zerotier/zerotier:1.14.2
-    command: ${NETWORK_ID}
+    restart: unless-stopped
     volumes:
-      - /data/zerotier:/var/lib/zerotier-one
+      - ${APP_DATA_DIR}/data:/var/lib/zerotier-one
     network_mode: host
-    healthcheck:
-      test: "true"
     cap_add:
       - NET_ADMIN
       - SYS_ADMIN
     devices:
       - /dev/net/tun
-    networks: {}
-    ports: []
+    healthcheck:
+      test: ["CMD", "zerotier-cli", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
