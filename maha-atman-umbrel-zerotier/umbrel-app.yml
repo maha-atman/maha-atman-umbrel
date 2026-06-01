@@ -2,7 +2,7 @@ manifestVersion: 1
 id: maha-atman-umbrel-zerotier
 category: Tools
 name: ZeroTier
-version: "1.14.2"
+version: "1.16.2"
 tagline: ZeroTier Network Management
 description: >-
   ZeroTier is a smart Ethernet switch for planet Earth.

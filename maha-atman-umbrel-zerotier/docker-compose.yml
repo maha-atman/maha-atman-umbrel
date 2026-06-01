@@ -7,7 +7,7 @@ services:
       APP_PORT: "9993"
 
   zerotier:
-    image: zerotier/zerotier:1.14.2
+    image: zyclonite/zerotier:1.16.2
     restart: unless-stopped
     volumes:
       - ${APP_DATA_DIR}/data:/var/lib/zerotier-one
