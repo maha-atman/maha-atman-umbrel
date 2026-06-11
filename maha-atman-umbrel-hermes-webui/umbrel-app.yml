@@ -18,7 +18,7 @@ website: https://hermes-agent.nousresearch.com/
 dependencies: []
 repo: https://github.com/nesquena/hermes-webui
 support: https://github.com/nesquena/hermes-webui/issues
-port: 2787
+port: 10079
 gallery:
   - 1.jpg
   - 2.jpg
@@ -26,6 +26,6 @@ gallery:
 path: ""
 defaultUsername: ""
 defaultPassword: ""
-icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/hermes.png
+icon: https://raw.githubusercontent.com/lobehub/lobe-icons/refs/heads/master/packages/static-png/light/hermesagent.png
 submitter: nesquena
 submission: https://github.com/nesquena/hermes-webui
