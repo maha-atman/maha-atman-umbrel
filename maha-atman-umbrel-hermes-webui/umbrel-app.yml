@@ -1,0 +1,31 @@
+manifestVersion: 1
+id: hermes-webui-umbrel
+category: AI
+name: Hermes WebUI
+version: "0.51.348"
+tagline: Web interface for Hermes AI Agent
+description: >-
+  Hermes WebUI is a lightweight, dark-themed web interface for Hermes Agent —
+  an autonomous AI assistant that retains context across sessions, runs scheduled
+  jobs, and connects to 10+ messaging platforms. Features include streaming chat
+  with multi-provider model support, session management, workspace file browser,
+  voice input, profile switching, cron job management, skills and memory panels,
+  and Mermaid diagram rendering.
+releaseNotes: >-
+  Initial Umbrel release of Hermes WebUI.
+developer: Nous Research
+website: https://hermes-agent.nousresearch.com/
+dependencies: []
+repo: https://github.com/nesquena/hermes-webui
+support: https://github.com/nesquena/hermes-webui/issues
+port: 2787
+gallery:
+  - 1.jpg
+  - 2.jpg
+  - 3.jpg
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/hermes.png
+submitter: nesquena
+submission: https://github.com/nesquena/hermes-webui
