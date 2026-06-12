@@ -9,7 +9,7 @@ services:
   app:
     image: ghcr.io/nesquena/hermes-webui@sha256:788c9fc92592c7333f3b11f14e5af970c2d054fe46837eb63e44dc60fd338250
     user: "1000:1000"
-    restart: unless-restarted
+    restart: unless-stopped
     environment:
       HERMES_WEBUI_HOST: "0.0.0.0"
       HERMES_WEBUI_PORT: "8787"
