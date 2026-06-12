@@ -2,7 +2,7 @@ manifestVersion: 1
 id: maha-atman-umbrel-hermes-webui
 category: AI
 name: Hermes WebUI
-version: "0.51.348"
+version: "0.51.366"
 tagline: Web interface for Hermes AI Agent
 description: >-
   Hermes WebUI is a lightweight, dark-themed web interface for Hermes Agent —
@@ -15,9 +15,10 @@ releaseNotes: >-
   Initial Umbrel release of Hermes WebUI.
 developer: Nous Research
 website: https://hermes-agent.nousresearch.com/
-dependencies: []
-repo: https://github.com/nesquena/hermes-webui
-support: https://github.com/nesquena/hermes-webui/issues
+dependencies:
+  - hermes-agent
+repo: https://github.com/maha-atman/maha-atman-umbrel
+support: https://github.com/maha-atman/maha-atman-umbrel/issues
 port: 10079
 gallery:
   - 1.jpg
