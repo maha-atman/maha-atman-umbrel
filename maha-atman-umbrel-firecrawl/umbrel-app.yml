@@ -16,7 +16,7 @@ website: https://firecrawl.dev/
 dependencies: []
 repo: https://github.com/maha-atman/maha-atman-umbrel
 support: https://github.com/maha-atman/maha-atman-umbrel/issues
-port: 10080
+port: 3002
 gallery:
   - 1.jpg
   - 2.jpg
