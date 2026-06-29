@@ -5,7 +5,6 @@ services:
     image: ghcr.io/firecrawl/firecrawl:latest
     container_name: firecrawl-api
     restart: unless-stopped
-    user: "1000:1000"
     ports:
       - "3002:3002"
     environment:
@@ -17,10 +16,10 @@ services:
       REDIS_URL: redis://firecrawl-redis:6379
       REDIS_RATE_LIMIT_URL: redis://firecrawl-redis:6379
       PLAYWRIGHT_MICROSERVICE_URL: http://firecrawl-playwright:3000/scrape
-      POSTGRES_USER: firecrawl
-      POSTGRES_PASSWORD: firecrawl
-      POSTGRES_DB: firecrawl
-      POSTGRES_HOST: firecrawl-postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_HOST: firecrawl-nuq-postgres
       POSTGRES_PORT: "5432"
       USE_DB_AUTHENTICATION: "false"
       NUM_WORKERS_PER_QUEUE: "4"
@@ -33,9 +32,9 @@ services:
       HARNESS_STARTUP_TIMEOUT_MS: "60000"
     depends_on:
       firecrawl-redis:
-        condition: service_healthy
-      firecrawl-postgres:
-        condition: service_healthy
+        condition: service_started
+      firecrawl-nuq-postgres:
+        condition: service_started
       firecrawl-rabbitmq:
         condition: service_healthy
       firecrawl-playwright:
@@ -43,6 +42,10 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/firecrawl:/app/data
       - ${APP_DATA_DIR}/data/uploads:/app/uploads
+    command: node dist/src/harness.js --start-docker
+    cpus: 4.0
+    mem_limit: 8G
+    memswap_limit: 8G
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3002/health"]
       interval: 30s
@@ -74,46 +77,32 @@ services:
       start_period: 30s
 
   firecrawl-redis:
-    image: redis:7-alpine
+    image: redis:alpine
     container_name: firecrawl-redis
     restart: unless-stopped
-    command: redis-server --bind 0.0.0.0 --appendonly yes
-    volumes:
-      - ${APP_DATA_DIR}/data/redis:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+    command: redis-server --bind 0.0.0.0
 
-  firecrawl-postgres:
-    image: postgres:15-alpine
-    container_name: firecrawl-postgres
+  firecrawl-nuq-postgres:
+    image: ghcr.io/firecrawl/nuq-postgres:latest
+    container_name: firecrawl-nuq-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: firecrawl
-      POSTGRES_PASSWORD: firecrawl
-      POSTGRES_DB: firecrawl
-      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
     volumes:
       - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U firecrawl"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
 
   firecrawl-rabbitmq:
-    image: rabbitmq:3-alpine
+    image: rabbitmq:3-management
     container_name: firecrawl-rabbitmq
     restart: unless-stopped
-    environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+    command: rabbitmq-server
     volumes:
       - ${APP_DATA_DIR}/data/rabbitmq:/var/lib/rabbitmq
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "-q", "check_running"]
-      interval: 10s
+      interval: 5s
       timeout: 5s
       retries: 3
+      start_period: 5s
