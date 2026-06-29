@@ -14,40 +14,32 @@ services:
       INTERNAL_PORT: "3002"
       EXTRACT_WORKER_PORT: "3004"
       WORKER_PORT: "3005"
-      REDIS_URL: redis://redis:6379
-      REDIS_RATE_LIMIT_URL: redis://redis:6379
-      PLAYWRIGHT_MICROSERVICE_URL: http://playwright-service:3000/scrape
-      POSTGRES_USER: ${POSTGRES_USER:-firecrawl}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-firecrawl}
-      POSTGRES_DB: ${POSTGRES_DB:-firecrawl}
-      POSTGRES_HOST: postgres
+      REDIS_URL: redis://firecrawl-redis:6379
+      REDIS_RATE_LIMIT_URL: redis://firecrawl-redis:6379
+      PLAYWRIGHT_MICROSERVICE_URL: http://firecrawl-playwright:3000/scrape
+      POSTGRES_USER: firecrawl
+      POSTGRES_PASSWORD: firecrawl
+      POSTGRES_DB: firecrawl
+      POSTGRES_HOST: firecrawl-postgres
       POSTGRES_PORT: "5432"
       USE_DB_AUTHENTICATION: "false"
-      NUM_WORKERS_PER_QUEUE: ${NUM_WORKERS_PER_QUEUE:-4}
-      CRAWL_CONCURRENT_REQUESTS: ${CRAWL_CONCURRENT_REQUESTS:-5}
-      MAX_CONCURRENT_JOBS: ${MAX_CONCURRENT_JOBS:-3}
-      BROWSER_POOL_SIZE: ${BROWSER_POOL_SIZE:-3}
+      NUM_WORKERS_PER_QUEUE: "4"
+      CRAWL_CONCURRENT_REQUESTS: "5"
+      MAX_CONCURRENT_JOBS: "3"
+      BROWSER_POOL_SIZE: "3"
       ENV: production
-      LOGGING_LEVEL: ${LOGGING_LEVEL:-info}
-      NUQ_RABBITMQ_URL: amqp://rabbitmq:5672
+      LOGGING_LEVEL: info
+      NUQ_RABBITMQ_URL: amqp://firecrawl-rabbitmq:5672
       HARNESS_STARTUP_TIMEOUT_MS: "60000"
-      # Optional: LLM features
-      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
-      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
-      MODEL_NAME: ${MODEL_NAME:-}
-      MODEL_EMBEDDING_NAME: ${MODEL_EMBEDDING_NAME:-}
-      # Optional: Webhooks
-      SELF_HOSTED_WEBHOOK_URL: ${SELF_HOSTED_WEBHOOK_URL:-}
-      SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL:-}
-      # Optional: Proxy
-      PROXY_SERVER: ${PROXY_SERVER:-}
-      PROXY_USERNAME: ${PROXY_USERNAME:-}
-      PROXY_PASSWORD: ${PROXY_PASSWORD:-}
     depends_on:
-      - redis
-      - postgres
-      - rabbitmq
-      - playwright-service
+      firecrawl-redis:
+        condition: service_healthy
+      firecrawl-postgres:
+        condition: service_healthy
+      firecrawl-rabbitmq:
+        condition: service_healthy
+      firecrawl-playwright:
+        condition: service_started
     volumes:
       - ${APP_DATA_DIR}/data/firecrawl:/app/data
       - ${APP_DATA_DIR}/data/uploads:/app/uploads
@@ -58,15 +50,13 @@ services:
       retries: 3
       start_period: 60s
 
-  playwright-service:
+  firecrawl-playwright:
     image: ghcr.io/firecrawl/playwright-service:latest
+    container_name: firecrawl-playwright
     restart: unless-stopped
     environment:
       PORT: "3000"
-      MAX_CONCURRENT_PAGES: ${CRAWL_CONCURRENT_REQUESTS:-5}
-      PROXY_SERVER: ${PROXY_SERVER:-}
-      PROXY_USERNAME: ${PROXY_USERNAME:-}
-      PROXY_PASSWORD: ${PROXY_PASSWORD:-}
+      MAX_CONCURRENT_PAGES: "5"
       ALLOW_LOCAL_WEBHOOKS: "false"
       BLOCK_MEDIA: "false"
     volumes:
@@ -83,8 +73,9 @@ services:
       retries: 2
       start_period: 30s
 
-  redis:
+  firecrawl-redis:
     image: redis:7-alpine
+    container_name: firecrawl-redis
     restart: unless-stopped
     command: redis-server --bind 0.0.0.0 --appendonly yes
     volumes:
@@ -95,28 +86,30 @@ services:
       timeout: 5s
       retries: 3
 
-  postgres:
+  firecrawl-postgres:
     image: postgres:15-alpine
+    container_name: firecrawl-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-firecrawl}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-firecrawl}
-      POSTGRES_DB: ${POSTGRES_DB:-firecrawl}
+      POSTGRES_USER: firecrawl
+      POSTGRES_PASSWORD: firecrawl
+      POSTGRES_DB: firecrawl
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-firecrawl}"]
+      test: ["CMD-SHELL", "pg_isready -U firecrawl"]
       interval: 10s
       timeout: 5s
       retries: 3
 
-  rabbitmq:
+  firecrawl-rabbitmq:
     image: rabbitmq:3-alpine
+    container_name: firecrawl-rabbitmq
     restart: unless-stopped
     environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD:-guest}
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
     volumes:
       - ${APP_DATA_DIR}/data/rabbitmq:/var/lib/rabbitmq
     healthcheck:
