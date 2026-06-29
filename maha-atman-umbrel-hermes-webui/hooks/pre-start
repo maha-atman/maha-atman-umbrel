@@ -1,19 +1,33 @@
 #!/bin/bash
+
 # hooks/pre-start — runs before the app container starts
 # Copies Hermes Agent Python source from the agent container if not already present.
-# This is needed because /opt/hermes is baked into the agent image, not a bind mount.
 
-AGENT_SRC="${APP_DATA_DIR}/data/hermes-agent-src"
+set -e
 
-if [ ! -f "$AGENT_SRC/pyproject.toml" ]; then
-  echo "[hermes-webui] Agent source not found at $AGENT_SRC — copying from hermes-agent container..."
+# Get the root of the Umbrel app directory (robust, no env vars needed)
+APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# Destination inside Umbrel app data
+AGENT_SRC="$APP_DIR/data/hermes-agent-src"
+
+# Expected file to check if source already exists
+CHECK_FILE="$AGENT_SRC/hermes/pyproject.toml"
+
+if [ ! -f "$CHECK_FILE" ]; then
+  echo "[hermes-webui] Agent source not found at $AGENT_SRC — copying from container..."
+
   mkdir -p "$AGENT_SRC"
+
+  # Copy from running container
   docker cp hermes-agent_web_1:/opt/hermes "$AGENT_SRC"
+
   if [ $? -eq 0 ]; then
-    echo "[hermes-webui] Agent source copied successfully."
+    echo "[hermes-webui] Agent source copied successfully to $AGENT_SRC"
   else
-    echo "[hermes-webui] WARNING: Failed to copy agent source. WebUI may not start correctly."
-    echo "[hermes-webui] Ensure hermes-agent app is running, then restart this app."
+    echo "[hermes-webui] WARNING: Failed to copy agent source."
+    echo "[hermes-webui] Ensure hermes-agent container is running."
+    exit 1
   fi
 else
   echo "[hermes-webui] Agent source already present at $AGENT_SRC"

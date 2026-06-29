@@ -1,0 +1,18 @@
+#!/bin/bash
+# Firecrawl Umbrel app pre-start hook
+# Runs before the app starts to prepare the environment
+
+set -e
+
+# Ensure data directories exist
+mkdir -p "${APP_DATA_DIR}/data/firecrawl"
+mkdir -p "${APP_DATA_DIR}/data/uploads"
+mkdir -p "${APP_DATA_DIR}/data/postgres"
+mkdir -p "${APP_DATA_DIR}/data/redis"
+mkdir -p "${APP_DATA_DIR}/data/rabbitmq"
+mkdir -p "${APP_DATA_DIR}/data/playwright-cache"
+
+# Set proper permissions
+chmod -R 755 "${APP_DATA_DIR}/data"
+
+echo "Firecrawl app pre-start hook completed successfully"
