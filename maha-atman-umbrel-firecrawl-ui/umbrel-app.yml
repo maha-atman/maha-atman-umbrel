@@ -1,0 +1,25 @@
+manifestVersion: 1
+id: maha-atman-umbrel-firecrawl-ui
+category: Tools
+name: Firecrawl UI
+version: "latest"
+tagline: Web UI for Firecrawl
+description: >-
+  Firecrawl UI is a lightweight web front-end for the Firecrawl API. It lets you
+  scrape pages, launch crawls, and inspect extracted results in a browser.
+releaseNotes: >-
+  Initial Umbrel release of Firecrawl UI.
+developer: obeoneorg
+website: https://github.com/obeone/firecrawl-ui
+dependencies: []
+repo: https://github.com/maha-atman/maha-atman-umbrel
+support: https://github.com/obeone/firecrawl-ui/issues
+port: 8880
+gallery:
+  - 1.jpg
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+icon: https://raw.githubusercontent.com/obeone/firecrawl-ui/main/logo/logo.png
+submitter: maha-atman
+submission: https://github.com/obeone/firecrawl-ui

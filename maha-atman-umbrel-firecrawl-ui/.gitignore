@@ -1,0 +1,4 @@
+# Umbrel app package metadata
+.env
+.DS_Store
+*.log
