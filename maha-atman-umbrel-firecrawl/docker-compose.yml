@@ -1,15 +1,13 @@
-version: "3.8"
+version: "3.7"
 
 services:
-  app_proxy:
-    environment:
-      APP_HOST: maha-atman-umbrel-firecrawl_api_1
-      APP_PORT: "3002"
-
   api:
     image: ghcr.io/firecrawl/firecrawl:latest
+    container_name: firecrawl-api
     restart: unless-stopped
     user: "1000:1000"
+    ports:
+      - "3002:3002"
     environment:
       HOST: "0.0.0.0"
       PORT: "3002"
@@ -33,7 +31,7 @@ services:
       LOGGING_LEVEL: ${LOGGING_LEVEL:-info}
       NUQ_RABBITMQ_URL: amqp://rabbitmq:5672
       HARNESS_STARTUP_TIMEOUT_MS: "60000"
-      # Optional: Set these for LLM features
+      # Optional: LLM features
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
       MODEL_NAME: ${MODEL_NAME:-}
@@ -41,7 +39,7 @@ services:
       # Optional: Webhooks
       SELF_HOSTED_WEBHOOK_URL: ${SELF_HOSTED_WEBHOOK_URL:-}
       SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL:-}
-      # Optional: Proxy support
+      # Optional: Proxy
       PROXY_SERVER: ${PROXY_SERVER:-}
       PROXY_USERNAME: ${PROXY_USERNAME:-}
       PROXY_PASSWORD: ${PROXY_PASSWORD:-}
@@ -126,7 +124,3 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-
-networks:
-  default:
-    driver: bridge
