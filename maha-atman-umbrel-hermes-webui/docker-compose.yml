@@ -9,7 +9,7 @@ services:
     volumes:
       # Hermes home — shares state with the Umbrel Hermes app
       - /home/umbrel/umbrel/app-data/hermes-agent/data/hermes:/home/hermeswebui/.hermes
-      # Workspace directory (create on host if needed)
+      # Workspace directory
       - /home/umbrel/umbrel/app-data/hermes-agent/data/hermes/home/workspace:/workspace
     environment:
       - HERMES_HOME=/home/hermeswebui/.hermes
@@ -19,3 +19,8 @@ services:
       - WANTED_UID=1000
       - WANTED_GID=1000
       - HERMES_SKIP_CHMOD=1
+      # Gateway-backed chat — no agent source needed
+      - HERMES_WEBUI_CHAT_BACKEND=gateway
+      - HERMES_WEBUI_GATEWAY_BASE_URL=http://host.docker.internal:8642
+      - HERMES_WEBUI_GATEWAY_API_KEY=hermes-webui-secret-key
+      - HERMES_WEBUI_GATEWAY_USE_RUNS_API=true
