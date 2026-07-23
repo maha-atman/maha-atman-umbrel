@@ -7,7 +7,15 @@ services:
     ports:
       - "8787:8787"
     volumes:
+      # Hermes home — shares state with the Umbrel Hermes app
       - /home/umbrel/umbrel/app-data/hermes-agent/data/hermes:/home/hermeswebui/.hermes
+      # Workspace directory (create on host if needed)
+      - /home/umbrel/umbrel/app-data/hermes-agent/data/hermes/home/workspace:/workspace
     environment:
       - HERMES_HOME=/home/hermeswebui/.hermes
       - HERMES_WEBUI_HOST=0.0.0.0
+      - HERMES_WEBUI_PORT=8787
+      - HERMES_WEBUI_STATE_DIR=/home/hermeswebui/.hermes/webui
+      - WANTED_UID=1000
+      - WANTED_GID=1000
+      - HERMES_SKIP_CHMOD=1
