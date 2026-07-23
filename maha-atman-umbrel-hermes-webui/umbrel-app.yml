@@ -1,25 +1,23 @@
 manifestVersion: 1
-id: maha-atman-umbrel-hermes-webui
+id: hermes-webui
 category: AI
 name: Hermes WebUI
-version: "0.51.366"
-tagline: Web interface for Hermes AI Agent
+version: "0.52.141"
+tagline: Web interface for Hermes Agent
 description: >-
-  Hermes WebUI is a lightweight, dark-themed web interface for Hermes Agent —
-  an autonomous AI assistant that retains context across sessions, runs scheduled
-  jobs, and connects to 10+ messaging platforms. Features include streaming chat
-  with multi-provider model support, session management, workspace file browser,
-  voice input, profile switching, cron job management, skills and memory panels,
-  and Mermaid diagram rendering.
+  Hermes WebUI is a lightweight, dark-themed web app interface for Hermes Agent.
+  Full parity with the CLI experience — chat, sessions, workspace browsing,
+  profiles, themes, and settings from any browser. Connects directly to your
+  existing Hermes Agent installation.
 releaseNotes: >-
-  Initial Umbrel release of Hermes WebUI.
-developer: Nous Research
-website: https://hermes-agent.nousresearch.com/
+  Initial release. Requires a running Hermes Agent Umbrel app with shared data volume.
+developer: nesquena
+website: https://github.com/nesquena/hermes-webui
 dependencies:
   - hermes-agent
-repo: https://github.com/maha-atman/maha-atman-umbrel
-support: https://github.com/maha-atman/maha-atman-umbrel/issues
-port: 10079
+repo: https://github.com/nesquena/hermes-webui
+support: https://github.com/nesquena/hermes-webui/issues
+port: 8787
 gallery:
   - 1.jpg
   - 2.jpg
@@ -27,6 +25,6 @@ gallery:
 path: ""
 defaultUsername: ""
 defaultPassword: ""
-icon: https://raw.githubusercontent.com/lobehub/lobe-icons/refs/heads/master/packages/static-png/light/hermesagent.png
-submitter: nesquena
-submission: https://github.com/nesquena/hermes-webui
+icon: https://raw.githubusercontent.com/nesquena/hermes-webui/master/static/favicon.ico
+submitter: maha-atman
+submission: https://github.com/maha-atman/maha-atman-umbrel

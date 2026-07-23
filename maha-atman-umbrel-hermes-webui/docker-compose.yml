@@ -1,25 +1,13 @@
-version: "3.7"
-
+version: '3.7'
 services:
-  app_proxy:
-    environment:
-      APP_HOST: maha-atman-umbrel-hermes-webui_app_1
-      APP_PORT: "8787"
-
-  app:
-    image: ghcr.io/nesquena/hermes-webui@sha256:788c9fc92592c7333f3b11f14e5af970c2d054fe46837eb63e44dc60fd338250
-    user: "1000:1000"
+  hermes-webui:
+    image: ghcr.io/nesquena/hermes-webui:latest
+    container_name: hermes-webui
     restart: unless-stopped
-    environment:
-      HERMES_WEBUI_HOST: "0.0.0.0"
-      HERMES_WEBUI_PORT: "8787"
-      HERMES_WEBUI_STATE_DIR: /home/hermeswebui/.hermes/webui
-      HERMES_WEBUI_DEFAULT_WORKSPACE: /workspace
+    ports:
+      - "8787:8787"
     volumes:
-      # Mount the Hermes Agent's data directory as the WebUI home.
-      # This gives the WebUI access to config.yaml, .env, sessions, memory, etc.
-      # Requires hermes-agent Umbrel app to be installed first.
-      - /home/umbrel/umbrel/app-data/hermes-agent/data/hermes:/home/hermeswebui
-      # Agent Python source (populated by hooks/pre-start on first run)
-      - ${APP_DATA_DIR}/data/hermes-agent-src:/home/hermeswebui/.hermes/hermes-agent:ro
-      - ${APP_DATA_DIR}/data/workspace:/workspace
+      - /home/umbrel/umbrel/app-data/hermes-agent/data/hermes:/home/hermeswebui/.hermes
+    environment:
+      - HERMES_HOME=/home/hermeswebui/.hermes
+      - HERMES_WEBUI_HOST=0.0.0.0
