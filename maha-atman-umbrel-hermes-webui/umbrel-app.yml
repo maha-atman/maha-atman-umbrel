@@ -1,8 +1,8 @@
 manifestVersion: 1
-id: hermes-webui
+id: maha-atman-umbrel-hermes-webui
 category: AI
 name: Hermes WebUI
-version: "0.52.141"
+version: "0.52.0"
 tagline: Web interface for Hermes Agent
 description: >-
   Hermes WebUI is a lightweight, dark-themed web app interface for Hermes Agent.
@@ -15,8 +15,8 @@ developer: nesquena
 website: https://github.com/nesquena/hermes-webui
 dependencies:
   - hermes-agent
-repo: https://github.com/nesquena/hermes-webui
-support: https://github.com/nesquena/hermes-webui/issues
+repo: https://github.com/maha-atman/maha-atman-umbrel
+support: https://github.com/maha-atman/maha-atman-umbrel/issues
 port: 8787
 gallery:
   - 1.jpg
@@ -27,4 +27,3 @@ defaultUsername: ""
 defaultPassword: ""
 icon: https://raw.githubusercontent.com/nesquena/hermes-webui/master/static/favicon.ico
 submitter: maha-atman
-submission: https://github.com/maha-atman/maha-atman-umbrel
